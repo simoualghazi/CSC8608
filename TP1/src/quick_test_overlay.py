@@ -10,7 +10,7 @@ from viz_utils import render_overlay
 imgs = list(Path("TP1/data/images").glob("*.jpg")) + list(Path("TP1/data/images").glob("*.png"))
 if not imgs:
     raise FileNotFoundError("Aucune image dans TP1/data/images")
-img_path = imgs[0]
+img_path = imgs[2]
 
 bgr = cv2.imread(str(img_path), cv2.IMREAD_COLOR)
 rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
