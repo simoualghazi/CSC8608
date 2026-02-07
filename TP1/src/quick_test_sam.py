@@ -4,7 +4,7 @@ from pathlib import Path
 from sam_utils import load_sam_predictor, predict_mask_from_box, get_device
 
 # Prend la première image trouvée (jpg/png)
-imgs = list(Path("TP1/data/images").glob("*.jpg")) + list(Path("TP1/data/images").glob("*.png"))
+imgs = list(Path("TP1/data/images").glob("*.png")) + list(Path("TP1/data/images").glob("*.png"))
 if not imgs:
     raise FileNotFoundError("Aucune image trouvée dans TP1/data/images")
 
@@ -12,7 +12,7 @@ img_path = imgs[0]
 bgr = cv2.imread(str(img_path), cv2.IMREAD_COLOR)
 rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
 
-ckpt = "TP1/models/sam_vit_h_4b8939.pth"   # adapte si tu as vit_l ou vit_b
+ckpt = "TP1/models/sam_vit_h_4b8939.pth"   
 model_type = "vit_h"
 
 print("device:", get_device())
