@@ -2,4 +2,9 @@ streamlit
 opencv-python
 numpy
 matplotlib
+<<<<<<< HEAD
 git+https://github.com/facebookresearch/segment-anything.git
+=======
+# SAM v1 (Segment Anything)
+git+https://github.com/facebookresearch/segment-anything.git
+>>>>>>> 0c82e037aa738861739115a8ef9720a7e11eb6cc
