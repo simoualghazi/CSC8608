@@ -116,7 +116,7 @@ st.write({
 
 
 # Prévisualisation bbox-only (live)
-preview = draw_box_preview(img, box)
+preview = draw_preview(img, box, st.session_state["points"])
 st.image(preview, caption="Prévisualisation : bbox (avant segmentation)", use_container_width=True)
 
 # Bonus : avertissement bbox très petite
