@@ -79,3 +79,47 @@ Les overlays (bbox + masque) permettent de valider rapidement si la bbox guide c
 En agrandissant la bbox, SAM reçoit plus de contexte : cela peut aider si l’objet est grand (ex. image2, aire très élevée), mais augmente aussi le risque d’inclure du fond ou des objets voisins, ce qui gonfle l’aire et rend le contour plus irrégulier. En rétrécissant la bbox, le masque devient souvent plus ciblé , mais si la bbox coupe une partie de l’objet, SAM peut rater des zones ou segmenter un sous-objet. L’overlay permet de voir immédiatement si le masque déborde hors de la zone attendue, et si la bbox doit être resserrée ou recentrée. On observe aussi que les objets fins/détaillés donnent des périmètres relativement élevés par rapport à l’aire, signe de contours plus complexes.
 
 ## EXERCICE 6:
+### Comparaison Avant / Après
+
+#### Cas 1 : 
+**Avant**
+![alt text](image-9.png)
+masque global couvrant une grande partie de la scène (fond + objets)
+**Après**
+![alt text](image-11.png)
+masque plus localisé sur l’objet d’intérêt, (les mains et la balle)
+
+Points utilisés :
+- BG (fond) : (765, 217)
+- FG (objet) : (587, 210)
+
+Scores (multimask) :
+- idx 0 : 0.6649  
+- idx 1 : 0.7963
+- idx 2 : 0.8447
+
+Masque choisi :
+- mask_idx : 0
+- score : 0.6649
+- area_px : 103910
+- mask_bbox : (90, 51, 962, 646)
+- perimeter : 6242.71
+- temps : 1640.9 ms
+
+Dans ce cas, l’ajout d’un point BG a été essentiel car la bbox englobe une grande partie de la scène (foule + mains + filet). Sans BG, SAM tend à produire un masque global. Le point BG placé sur une zone de fond permet d’exclure explicitement cette région et de favoriser un masque centré sur l’objet visé.
+
+## Exercice 7:
+### Limites observées et pistes d’amélioration
+
+Les principaux échecs de segmentation observés proviennent d’abord des scènes à fond complexe, où une bounding box large conduit SAM à produire un masque global couvrant le fond et plusieurs objets (ex. scène de volley avec foule).  
+ Ensuite, les objets fins ou répétitifs (filet, mains) génèrent des masques bruités ou fragmentés, même avec un point FG. Enfin, les ambiguïtés dans la bbox (plusieurs objets plausibles à l’intérieur) rendent le choix du bon masque difficile sans guidage supplémentaire.  
+ Pour améliorer la situation, l’ajout systématique de points BG permet d’exclure explicitement le fond ou les objets parasites. Une UI contraignant la taille minimale/maximale de la bbox et encourageant une bbox plus serrée réduirait l’ambiguïté.  
+  Enfin, un post-traitement simple (filtrage des petits composants, lissage des contours) ou l’utilisation d’un dataset spécifique au domaine (ex. sports, objets fins) améliorerait la robustesse globale.
+
+### Logging et monitoring pour une intégration produit
+
+Pour industrialiser cette brique, il serait prioritaire de logger la taille de la bounding box (aire relative à l’image) afin de détecter les cas où la segmentation risque d’être ambiguë.  
+ Les scores des multimasks et l’index du masque sélectionné par l’utilisateur doivent être enregistrés pour repérer des changements de comportement du modèle.  
+  Le temps d’inférence (image embedding + prédiction) est essentiel pour surveiller les régressions de performance GPU.  
+   Les métriques géométriques du masque (aire, périmètre, ratio aire/bbox) permettraient de détecter des masques anormalement grands ou fragmentés.    
+Enfin, la présence et le type de points de guidage (FG/BG) doivent être loggés pour analyser les cas où une interaction utilisateur est nécessaire, ce qui peut indiquer un drift des données ou des limites du modèle sur certains scénarios.
