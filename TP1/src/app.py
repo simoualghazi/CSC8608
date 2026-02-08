@@ -45,8 +45,6 @@ def draw_preview(image_rgb: np.ndarray, box_xyxy: np.ndarray, points):
 
     return cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
 
-preview = draw_preview(img, box, st.session_state["points"])
-st.image(preview, caption="Prévisualisation : bbox + points (avant segmentation)", use_container_width=True)
 
 
 
