@@ -63,3 +63,19 @@ Le modèle SAM se charge correctement sur GPU (cuda). La fonction bbox→masque 
 
 Les overlays (bbox + masque) permettent de valider rapidement si la bbox guide correctement la segmentation. Sur un cas simple (image3), le masque est compact, le score est élevé (~0.96) et le périmètre reste modéré, ce qui indique une segmentation stable. Sur des scènes plus complexes (image6, image4), les scores diminuent (~0.79 puis ~0.68) et le périmètre augmente fortement, signe d’un contour plus irrégulier et de possibles erreurs (détails du fond inclus, objets voisins dans la bbox). L’overlay aide à identifier si le problème vient d’une bbox trop large/mal placée ou d’une ambiguïté de scène, et il permet d’ajuster le prompt (bbox plus serrée) ou de comparer les multimasks.
 ## Exercice 5:
+1. Cas difficile
+![alt text](image-7.png)
+2. Cas simple
+![alt text](image-6.png)
+### Tableau des résultats
+
+| image | bbox [x1,y1,x2,y2] | score | aire (px) | temps (ms) |
+|---|---|---:|---:|---:|
+| image1.png | [96, 65, 579, 578] | 0.992 | 104246 | 1649.4 |
+| image2.png | [85, 182, 1045, 1067] | 1.017 | 529579 | 1644.5 |
+| image9.png | [36, 52, 164, 132] | 0.782 | 1589 | 1643.7 |
+
+### Debug : Impact de la taille de la BBox
+En agrandissant la bbox, SAM reçoit plus de contexte : cela peut aider si l’objet est grand (ex. image2, aire très élevée), mais augmente aussi le risque d’inclure du fond ou des objets voisins, ce qui gonfle l’aire et rend le contour plus irrégulier. En rétrécissant la bbox, le masque devient souvent plus ciblé , mais si la bbox coupe une partie de l’objet, SAM peut rater des zones ou segmenter un sous-objet. L’overlay permet de voir immédiatement si le masque déborde hors de la zone attendue, et si la bbox doit être resserrée ou recentrée. On observe aussi que les objets fins/détaillés donnent des périmètres relativement élevés par rapport à l’aire, signe de contours plus complexes.
+
+## EXERCICE 6:
