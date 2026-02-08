@@ -44,3 +44,18 @@ ultra-realistic product photo of a leather sneaker on a white background, studio
 - Steps (15 → 30 → 50) : moins de steps réduit le temps mais peut dégrader la netteté ; 30 est un bon compromis ; 50 améliore parfois les détails avec un coût en temps plus élevé.
 - Guidance/CFG (4.0 → 7.5 → 12.0) : CFG faible donne plus de liberté au modèle ; CFG élevé force la fidélité au prompt mais peut produire des artefacts ou un rendu trop contraint.
 - Scheduler (EulerA vs DDIM) : EulerA produit souvent des textures plus contrastées, DDIM un rendu plus lisse et stable.
+# Exercice 4:
+
+### Grille de comparaison visuelle
+
+| Image Source | Strength = 0.35 | Strength = 0.60 | Strength = 0.85 |
+| :---: | :---: | :---: | :---: |
+| ![Source](../inputs/product.jpg) | ![Strength 0.35](../outputs/i2i_run07_strength035.png) | ![Strength 0.60](../outputs/i2i_run08_strength060.png) | ![Strength 0.85](../outputs/i2i_run09_strength085.png) |
+
+
+### Img2Img — Impact de strength (EulerA, seed=42, steps=30, CFG=7.5)
+
+- **Strength 0.35** : conserve fortement la structure (cadrage, forme globale, identité du produit). Changements limités (texture/éclairage subtils).
+- **Strength 0.60** : compromis : le produit reste reconnaissable mais davantage d’éléments changent (matière, détails, fond reconstruit).
+- **Strength 0.85** : éloignement fort de l’image source : la structure peut être altérée (détails/proportions), le rendu devient plus “créatif”.
+- **Utilisabilité e-commerce** : à strength élevé, génération d'une image trop différente du produit réel → moins acceptable pour une fiche produit (fidélité faible), utile plutôt pour concepts/variations.
