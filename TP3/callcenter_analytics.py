@@ -3,6 +3,23 @@ import re
 import json
 from typing import Dict, Any, List, Tuple
 from collections import Counter
+
+
+EMAIL_RE = re.compile(r"([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+)\.([A-Za-z]{2,})")
+# Téléphone US simplifié (ex: 555 0199, 555-0199, 5550199). On masque large.
+PHONE_RE = re.compile(r"\b(\d[\d\-\s]{5,}\d)\b")
+
+INTENTS = {
+    "refund_or_replacement": ["refund", "replacement", "damaged", "cracked", "broken"],
+    "delivery_issue": ["delivered", "package", "arrived", "yesterday", "order"],
+    "general_support": ["help", "support", "thank you", "calling"],
+}
+
+STOPWORDS = set([
+    "the","a","an","and","or","to","for","of","in","on","is","it","i","you","we","my","your",
+    "was","were","be","as","at","but","this","that","with","about","today"
+])
+
 # Regex "strict" email (fonctionne après normalisation)
 EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b")
 
