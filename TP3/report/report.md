@@ -47,3 +47,13 @@ La segmentation VAD aide à limiter les silences et à garder une transcription 
 
 ![alt text](image-10.png)
 ![alt text](image-9.png)
+
+Aprés modification:
+![alt text](image-11.png)
+
+Après ajout du post-traitement, l’email est correctement détecté et masqué (emails=1), alors qu’il n’était pas reconnu auparavant. En revanche, le numéro de téléphone et l’order number ne sont pas détectés.
+
+**Analyse:**
+
+Les erreurs de transcription Whisper qui impactent le plus les analytics sont liées aux entités épelées ou parlées. Par exemple, l’email est initialement transcrit sous la forme “dot … at … dot …”, ce qui empêche une détection naïve.  
+Le numéro de téléphone est transcrit en mots (“five, five, five…”), ce qui complique sa normalisation. De plus, l’order number est fragmenté (“AX1 9, 7, 3, 5”), ce qui rend sa détection fragile sans heuristique plus robuste. Ces erreurs ASR impactent directement la redaction PII et montrent l’importance d’un post-traitement adapté au contexte call center.
