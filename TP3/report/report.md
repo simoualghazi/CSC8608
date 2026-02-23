@@ -40,3 +40,10 @@ En passant de min_dur_s = 0.30 à 0.60, num_segments diminue (23 → 22) et spee
 ![alt text](image-7.png)
 ## Analyse :
 La segmentation VAD aide à limiter les silences et à garder une transcription stable, avec une latence faible (RTF ≈ 0.24 sur GPU). En revanche, elle peut fragmenter des phrases : par exemple “My name is Alex.” puis “and I will help you today.” sont séparées, et “I would like a refund” / “or replacement.” aussi. On observe aussi des débuts tronqués (“the package.”) et une ponctuation moins naturelle à la reconstruction par simple concaténation. Globalement, le VAD est utile pour contrôler coût/latence, mais un post-traitement (fusion de segments proches, ajout de ponctuation) améliorerait le rendu.
+# Exercice 5:
+
+![alt text](image-8.png)
+
+
+![alt text](image-10.png)
+![alt text](image-9.png)
