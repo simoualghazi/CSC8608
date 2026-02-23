@@ -29,10 +29,19 @@ def main():
     out = tts(text)
     t1 = time.time()
 
-    audio = np.asarray(out["audio"], dtype=np.float32)                 # numpy array
+    audio = np.asarray(out["audio"], dtype=np.float32)
     sr = int(out["sampling_rate"])
     elapsed_s = t1 - t0
-    audio_dur_s = float(audio.shape[1] / float(sr))
+
+    # durée robuste (marche si audio est [T] ou [C,T] ou [T,C])
+    if audio.ndim == 1:
+        num_samples = audio.shape[0]
+    elif audio.ndim == 2:
+        num_samples = max(audio.shape)   # prend la dimension temps
+    else:
+        raise ValueError(f"Unexpected audio ndim: {audio.ndim}, shape={audio.shape}")
+
+    audio_dur_s = float(num_samples / float(sr))
     rtf = elapsed_s / max(audio_dur_s, 1e-9)
 
     # normaliser la forme vers [1, T]

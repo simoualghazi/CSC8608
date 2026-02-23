@@ -57,3 +57,5 @@ Après ajout du post-traitement, l’email est correctement détecté et masqué
 
 Les erreurs de transcription Whisper qui impactent le plus les analytics sont liées aux entités épelées ou parlées. Par exemple, l’email est initialement transcrit sous la forme “dot … at … dot …”, ce qui empêche une détection naïve.  
 Le numéro de téléphone est transcrit en mots (“five, five, five…”), ce qui complique sa normalisation. De plus, l’order number est fragmenté (“AX1 9, 7, 3, 5”), ce qui rend sa détection fragile sans heuristique plus robuste. Ces erreurs ASR impactent directement la redaction PII et montrent l’importance d’un post-traitement adapté au contexte call center.
+
+# Exercice 6:
