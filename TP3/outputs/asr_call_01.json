@@ -1,0 +1,143 @@
+{
+  "audio_path": "TP3/data/call_01.wav",
+  "model_id": "openai/whisper-small",
+  "device": "cuda",
+  "audio_duration_s": 46.536,
+  "elapsed_s": 13.8375825881958,
+  "rtf": 0.29735221308655235,
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_s": 1.346,
+      "end_s": 1.982,
+      "text": "Hello."
+    },
+    {
+      "segment_id": 1,
+      "start_s": 2.466,
+      "end_s": 4.83,
+      "text": "Thank you for calling customer support."
+    },
+    {
+      "segment_id": 2,
+      "start_s": 5.314,
+      "end_s": 7.006,
+      "text": "My name is Alex."
+    },
+    {
+      "segment_id": 3,
+      "start_s": 7.298,
+      "end_s": 8.83,
+      "text": "and I will help you today."
+    },
+    {
+      "segment_id": 4,
+      "start_s": 9.378,
+      "end_s": 11.486,
+      "text": "I'm calling about an order"
+    },
+    {
+      "segment_id": 5,
+      "start_s": 11.842,
+      "end_s": 13.438,
+      "text": "that arrived damaged."
+    },
+    {
+      "segment_id": 6,
+      "start_s": 13.922,
+      "end_s": 14.878,
+      "text": "the package."
+    },
+    {
+      "segment_id": 7,
+      "start_s": 15.074,
+      "end_s": 16.766,
+      "text": "was delivered yesterday."
+    },
+    {
+      "segment_id": 8,
+      "start_s": 17.186,
+      "end_s": 18.942,
+      "text": "but the screen is cracked."
+    },
+    {
+      "segment_id": 9,
+      "start_s": 20.034,
+      "end_s": 21.694,
+      "text": "I would like a refund"
+    },
+    {
+      "segment_id": 10,
+      "start_s": 21.986,
+      "end_s": 23.262,
+      "text": "or replacement."
+    },
+    {
+      "segment_id": 11,
+      "start_s": 23.394,
+      "end_s": 24.67,
+      "text": "as soon as possible."
+    },
+    {
+      "segment_id": 12,
+      "start_s": 25.442,
+      "end_s": 26.942,
+      "text": "The order number is..."
+    },
+    {
+      "segment_id": 13,
+      "start_s": 27.554,
+      "end_s": 29.118,
+      "text": "AX1"
+    },
+    {
+      "segment_id": 14,
+      "start_s": 29.218,
+      "end_s": 31.454,
+      "text": "9, 7, 3, 5."
+    },
+    {
+      "segment_id": 15,
+      "start_s": 32.13,
+      "end_s": 33.694,
+      "text": "You can reach me at John."
+    },
+    {
+      "segment_id": 16,
+      "start_s": 33.826,
+      "end_s": 36.19,
+      "text": "dot smith at example dot com"
+    },
+    {
+      "segment_id": 17,
+      "start_s": 37.026,
+      "end_s": 37.726,
+      "text": "also."
+    },
+    {
+      "segment_id": 18,
+      "start_s": 37.954,
+      "end_s": 39.486,
+      "text": "My phone number is..."
+    },
+    {
+      "segment_id": 19,
+      "start_s": 39.81,
+      "end_s": 41.374,
+      "text": "five, five, five."
+    },
+    {
+      "segment_id": 20,
+      "start_s": 41.698,
+      "end_s": 42.91,
+      "text": "zero, one."
+    },
+    {
+      "segment_id": 21,
+      "start_s": 43.01,
+      "end_s": 44.094,
+      "text": "Nine, nine."
+    }
+  ],
+  "full_text": "Hello. Thank you for calling customer support. My name is Alex. and I will help you today. I'm calling about an order that arrived damaged. the package. was delivered yesterday. but the screen is cracked. I would like a refund or replacement. as soon as possible. The order number is... AX1 9, 7, 3, 5. You can reach me at John. dot smith at example dot com also. My phone number is... five, five, five. zero, one. Nine, nine."
+}

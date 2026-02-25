@@ -55,7 +55,7 @@ def main():
         segments.append(Segment(start_s=start_s, end_s=end_s))
 
     # Filtrage simple : supprimer segments trop courts
-    min_dur_s = 0.30
+    min_dur_s = 0.60
     segments = [s for s in segments if (s.end_s - s.start_s) >= min_dur_s]
 
     # Stats

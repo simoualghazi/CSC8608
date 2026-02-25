@@ -1,0 +1,101 @@
+{
+  "audio_path": "TP3/data/call_01.wav",
+  "sample_rate": 16000,
+  "duration_s": 46.536,
+  "min_segment_s": 0.6,
+  "segments": [
+    {
+      "start_s": 1.346,
+      "end_s": 1.982
+    },
+    {
+      "start_s": 2.466,
+      "end_s": 4.83
+    },
+    {
+      "start_s": 5.314,
+      "end_s": 7.006
+    },
+    {
+      "start_s": 7.298,
+      "end_s": 8.83
+    },
+    {
+      "start_s": 9.378,
+      "end_s": 11.486
+    },
+    {
+      "start_s": 11.842,
+      "end_s": 13.438
+    },
+    {
+      "start_s": 13.922,
+      "end_s": 14.878
+    },
+    {
+      "start_s": 15.074,
+      "end_s": 16.766
+    },
+    {
+      "start_s": 17.186,
+      "end_s": 18.942
+    },
+    {
+      "start_s": 20.034,
+      "end_s": 21.694
+    },
+    {
+      "start_s": 21.986,
+      "end_s": 23.262
+    },
+    {
+      "start_s": 23.394,
+      "end_s": 24.67
+    },
+    {
+      "start_s": 25.442,
+      "end_s": 26.942
+    },
+    {
+      "start_s": 27.554,
+      "end_s": 29.118
+    },
+    {
+      "start_s": 29.218,
+      "end_s": 31.454
+    },
+    {
+      "start_s": 32.13,
+      "end_s": 33.694
+    },
+    {
+      "start_s": 33.826,
+      "end_s": 36.19
+    },
+    {
+      "start_s": 37.026,
+      "end_s": 37.726
+    },
+    {
+      "start_s": 37.954,
+      "end_s": 39.486
+    },
+    {
+      "start_s": 39.81,
+      "end_s": 41.374
+    },
+    {
+      "start_s": 41.698,
+      "end_s": 42.91
+    },
+    {
+      "start_s": 43.01,
+      "end_s": 44.094
+    }
+  ],
+  "stats": {
+    "num_segments": 22,
+    "total_speech_s": 33.86399999999999,
+    "speech_ratio": 0.7276946879834965
+  }
+}
