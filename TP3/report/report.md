@@ -1,55 +1,55 @@
-# TP 3
+# TP 3: Deep learning pour audio
 **OUALGHAZI Mohamed**
 # Exercice 1:
-![alt text](image.png)
+![alt text](img/image.png)
 # Exercice 2:
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 L’audio est en WAV mono 16 kHz conforme aux exigences.  
 La durée est de 46.54 secondes.  
 Le RMS (0.0112) indique un niveau sonore modéré sans saturation.  
 Le clipping rate est nul (0.0), ce qui confirme l’absence de distorsion.  
 
 # Exercice 3:
-![alt text](image-4.png)
-## les 5 segments:
+![alt text](img/image-4.png)
+### les 5 segments:
 {"start_s": 1.346, "end_s": 1.982}
 {"start_s": 2.466, "end_s": 4.83}
 {"start_s": 5.314, "end_s": 7.006}
 {"start_s": 7.298, "end_s": 8.83}
 {"start_s": 9.378, "end_s": 11.486}
-## analyse :
+### analyse :
 Le ratio parole/silence est ~0.74, ce qui semble cohérent avec une lecture assez continue du texte avec quelques pauses (respiration et ponctuation). Les segments sont nombreux (23), ce qui reflète des micro-silences entre phrases ou mots.  
-## Question 3.d:
-![alt text](image-3.png)
+### Question 3.d:
+![alt text](img/image-3.png)
 En passant de min_dur_s = 0.30 à 0.60, num_segments diminue (23 → 22) et speech_ratio baisse légèrement (0.739 → 0.728), ce qui est cohérent car des segments de parole très courts sont filtrés.
 
 # Exercice 4:
-![alt text](image-5.png)
+![alt text](img/image-5.png)
 
-## Extrait des 5 segments: 
-![alt text](image-6.png)
+### Extrait des 5 segments: 
+![alt text](img/image-6.png)
 {"segment_id": 0, "start_s": 1.346, "end_s": 1.982, "text": "Hello."}
 {"segment_id": 1, "start_s": 2.466, "end_s": 4.83, "text": "Thank you for calling customer support."}
 {"segment_id": 2, "start_s": 5.314, "end_s": 7.006, "text": "My name is Alex."}
 {"segment_id": 3, "start_s": 7.298, "end_s": 8.83, "text": "and I will help you today."}
 {"segment_id": 4, "start_s": 9.378, "end_s": 11.486, "text": "I'm calling about an order"}
-## Extrait “full_text”:
-![alt text](image-7.png)
-## Analyse :
+### Extrait “full_text”:
+![alt text](img/image-7.png)
+### Analyse :
 La segmentation VAD aide à limiter les silences et à garder une transcription stable, avec une latence faible (RTF ≈ 0.24 sur GPU). En revanche, elle peut fragmenter des phrases : par exemple “My name is Alex.” puis “and I will help you today.” sont séparées, et “I would like a refund” / “or replacement.” aussi. On observe aussi des débuts tronqués (“the package.”) et une ponctuation moins naturelle à la reconstruction par simple concaténation. Globalement, le VAD est utile pour contrôler coût/latence, mais un post-traitement (fusion de segments proches, ajout de ponctuation) améliorerait le rendu.
 # Exercice 5:
 
-![alt text](image-8.png)
+![alt text](img/image-8.png)
 
 
-![alt text](image-10.png)
-![alt text](image-9.png)
+![alt text](img/image-10.png)
+![alt text](img/image-9.png)
 
 Aprés modification:
-![alt text](image-11.png)
+![alt text](img/image-11.png)
 
 Après ajout du post-traitement, l’email est correctement détecté et masqué (emails=1), alors qu’il n’était pas reconnu auparavant. En revanche, le numéro de téléphone et l’order number ne sont pas détectés.
 
@@ -59,19 +59,23 @@ Les erreurs de transcription Whisper qui impactent le plus les analytics sont li
 Le numéro de téléphone est transcrit en mots (“five, five, five…”), ce qui complique sa normalisation. De plus, l’order number est fragmenté (“AX1 9, 7, 3, 5”), ce qui rend sa détection fragile sans heuristique plus robuste. Ces erreurs ASR impactent directement la redaction PII et montrent l’importance d’un post-traitement adapté au contexte call center.
 
 # Exercice 6:
-![alt text](image-12.png)
-![alt text](image-13.png)
+![alt text](img/image-12.png)
+![alt text](img/image-13.png)
 
 Le fichier TTS généré est en WAV mono 16 kHz (pcm_s16le), avec une durée de 8.77 secondes. Le format est cohérent avec le pipeline ASR utilisé précédemment, ce qui facilite une éventuelle réutilisation ou vérification automatique.
 
-![alt text](image-14.png)
+![alt text](img/image-14.png)
 **comparaison**
 La transcription Whisper du WAV TTS est globalement fidèle au texte source. Les différences observées sont mineures (ponctuation/virgules, omission de “a” dans “a refund”), sans perte de sens. Cela indique une bonne intelligibilité du signal TTS généré.
 **Observation qualité TTS**
 La réponse TTS est intelligible et le contenu est compris facilement. La prosodie est plutôt neutre/monotone, typique d’un modèle TTS léger, avec peu d’artefacts perceptibles. Le RTF ≈ 0.45 (3.96 s pour 8.77 s audio) suggère une latence compatible avec un usage interactif. La vérification ASR confirme la bonne intelligibilité, car Whisper retrouve presque tout le texte avec seulement de légères variations de ponctuation.
 
-# Exercice :
-Goulet d’étranglement (temps). Dans mon pipeline, l’étape la plus coûteuse est l’ASR Whisper : sur ~46.5 s d’audio, j’obtiens un RTF ≈ 0.30 (GPU), donc c’est la partie dominante en calcul malgré une exécution rapide. Le VAD est léger, et la TTS reste courte (RTF ≈ 0.58 sur ~7.8 s). Le premier lancement peut aussi être ralenti par le téléchargement des modèles, ensuite le cache accélère fortement.
-Étape la plus fragile (qualité). La partie la plus fragile est la chaîne “ASR → analytics PII” : Whisper transcrit souvent les PII de façon parlée/épelée (dot/at, chiffres en mots), et la segmentation VAD peut fragmenter des entités. Résultat : l’email est masqué (emails=1) mais le téléphone et l’order id ne sont pas détectés (phones=0, orders=0).
-Améliorations concrètes. (1) Ajouter un post-traitement de segments : padding ±200 ms et fusion des segments proches pour éviter des mots/entités tronqués, puis reconstruction plus fluide (ponctuation). (2) Renforcer la redaction sans entraîner de modèle : normalisation plus agressive (suppression virgules, mapping mots→digits), règles contextuelles robustes (“phone number is…”, “order number is…”) + tests unitaires sur plusieurs transcriptions.
+# Exercice 7 :
+
+![alt text](img/image-15.png)
+
+![alt text](img/image-16.png)
+**Goulet d’étranglement (temps).** Dans mon pipeline, l’étape la plus coûteuse est l’ASR Whisper : sur ~46.5 s d’audio, j’obtiens un RTF ≈ 0.30 (GPU), donc c’est la partie dominante en calcul malgré une exécution rapide. Le VAD est léger, et la TTS reste courte (RTF ≈ 0.58 sur ~7.8 s). Le premier lancement peut aussi être ralenti par le téléchargement des modèles, ensuite le cache accélère fortement.  
+**Étape la plus fragile (qualité).** La partie la plus fragile est la chaîne “ASR → analytics PII” : Whisper transcrit souvent les PII de façon parlée/épelée (dot/at, chiffres en mots), et la segmentation VAD peut fragmenter des entités. Résultat : l’email est masqué (emails=1) mais le téléphone et l’order id ne sont pas détectés (phones=0, orders=0).  
+**Améliorations concrètes.** (1) Ajouter un post-traitement de segments : padding ±200 ms et fusion des segments proches pour éviter des mots/entités tronqués, puis reconstruction plus fluide (ponctuation). (2) Renforcer la redaction sans entraîner de modèle : normalisation plus agressive (suppression virgules, mapping mots→digits), règles contextuelles robustes (“phone number is…”, “order number is…”) + tests unitaires sur plusieurs transcriptions.
 
