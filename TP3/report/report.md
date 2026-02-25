@@ -59,3 +59,13 @@ Les erreurs de transcription Whisper qui impactent le plus les analytics sont li
 Le numéro de téléphone est transcrit en mots (“five, five, five…”), ce qui complique sa normalisation. De plus, l’order number est fragmenté (“AX1 9, 7, 3, 5”), ce qui rend sa détection fragile sans heuristique plus robuste. Ces erreurs ASR impactent directement la redaction PII et montrent l’importance d’un post-traitement adapté au contexte call center.
 
 # Exercice 6:
+![alt text](image-12.png)
+![alt text](image-13.png)
+
+Le fichier TTS généré est en WAV mono 16 kHz (pcm_s16le), avec une durée de 8.77 secondes. Le format est cohérent avec le pipeline ASR utilisé précédemment, ce qui facilite une éventuelle réutilisation ou vérification automatique.
+
+![alt text](image-14.png)
+**comparaison**
+La transcription Whisper du WAV TTS est globalement fidèle au texte source. Les différences observées sont mineures (ponctuation/virgules, omission de “a” dans “a refund”), sans perte de sens. Cela indique une bonne intelligibilité du signal TTS généré.
+**Observation qualité TTS**
+La réponse TTS est intelligible et le contenu est compris facilement. La prosodie est plutôt neutre/monotone, typique d’un modèle TTS léger, avec peu d’artefacts perceptibles. Le RTF ≈ 0.45 (3.96 s pour 8.77 s audio) suggère une latence compatible avec un usage interactif. La vérification ASR confirme la bonne intelligibilité, car Whisper retrouve presque tout le texte avec seulement de légères variations de ponctuation.
