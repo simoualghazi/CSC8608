@@ -18,7 +18,7 @@ class CoraData:
 
 def load_cora() -> CoraData:
     root = os.environ.get("PYG_DATA_ROOT", os.path.expanduser("~/.cache/pyg_data"))
-    dataset = Planetoid(root=root, name=________)
+    dataset = Planetoid(root=root, name="Cora")
     data = dataset[0]
 
     return CoraData(
