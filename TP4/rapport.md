@@ -15,3 +15,8 @@
 **test_mask :**estimation finale “neutre” de la généralisation, à regarder une fois le modèle choisi.
 
 Séparer évite de surestimer la perf : si on tune sur le test, on biaise les résultats.
+
+![alt text](image-2.png)
+
+ # Exercice 3:
+ 
