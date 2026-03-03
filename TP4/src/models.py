@@ -2,6 +2,7 @@
 import torch
 import torch.nn as nn
 from torch_geometric.nn import GCNConv
+from torch_geometric.nn import SAGEConv
 
 
 
@@ -32,11 +33,6 @@ class GCN(nn.Module):
         x = self.conv2(x, edge_index)
         return x
     
-
-# TP4/src/models.py (ajout)
-from torch_geometric.nn import SAGEConv
-
-
 class GraphSAGE(nn.Module):
     def __init__(self, in_dim: int, hidden_dim: int, out_dim: int, dropout: float) -> None:
         super().__init__()
