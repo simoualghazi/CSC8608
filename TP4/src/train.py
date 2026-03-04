@@ -5,6 +5,7 @@ import yaml
 import torch
 import torch.nn as nn
 import time
+import os
 
 from torch_geometric.loader import NeighborLoader
 
@@ -160,6 +161,20 @@ def main() -> None:
     print(f"total_train_time_s={total_train_s:.4f}")
     train_loop_time = time.time() - train_start
     print(f"train_loop_time={train_loop_time:.4f}")
+    os.makedirs("TP4/runs", exist_ok=True)
+
+    ckpt_path = os.path.join(
+        "TP4/runs",
+        f"{args.model}.pt"
+    )
+
+    payload = {
+        "model": args.model,
+        "config_path": args.config,
+        "state_dict": model.state_dict(),
+    }
+    torch.save(payload, ckpt_path)
+    print("checkpoint_saved:", ckpt_path)
 
 
 if __name__ == "__main__":
