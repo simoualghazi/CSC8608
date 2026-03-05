@@ -70,8 +70,8 @@ def main() -> None:
     # Forward function (same signature for all models)
     def forward_once() -> torch.Tensor:
         if args.model == "mlp":
-            return model(X)
-        return model(X, edge_index)
+            return model(x)
+        return model(x, edge_index)
 
     # Warmup (important on GPU)
     with torch.no_grad():
