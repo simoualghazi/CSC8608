@@ -1,7 +1,11 @@
-/__pycache__
-/models__pycache__/
-*.pyc
-*.pth
+# Python cache
 __pycache__/
-*.pyc
-*.pth
+
+# Modèles entraînés
+/models/
+
+# Données
+/data/
+
+# Checkpoints et logs d'entraînement
+/runs/
