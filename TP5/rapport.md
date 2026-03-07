@@ -44,3 +44,36 @@ durée : 506 frames
 - Pour le carburant, il utilise beaucoup plus les moteurs que l’agent aléatoire, mais cette consommation est utile et contrôlée, car elle permet un atterrissage réussi. L’agent aléatoire, lui, consomme moins mais s’écrase rapidement.
 
 # Exercice 3:
+
+![Agent PPO Hacked](hacked_agent.gif)
+
+![alt text](image-2.png)
+
+**Évolution de la récompense moyenne**
+
+Pendant l’entraînement, la métrique ep_rew_mean est restée négative, autour de -116 à -112 points.
+Cela montre que l’agent n’a pas appris à réussir réellement l’atterrissage, mais plutôt à optimiser la fonction de récompense modifiée.
+
+**Stratégie adoptée par l’agent**
+
+L’agent a appris à ne jamais utiliser le moteur principal.
+Le rapport de vol montre en effet 0 allumage du moteur principal contre 87 utilisations des moteurs latéraux.
+Le module finit par s’écraser, ce qui montre que l’agent privilégie l’évitement de la pénalité plutôt que le succès de la mission.
+
+**Explication logique et mathématique**
+
+Dans l’environnement modifié, chaque utilisation du moteur principal ajoute une pénalité de 50 points :
+
+r'(t) = r(t) - 50 si action = 2
+
+L’agent cherche à maximiser la somme des récompenses cumulées :
+
+R = somme de  r_t
+
+Ainsi, s’il utilise le moteur principal n fois, il perd :
+
+50 × n
+
+Cette pénalité devient rapidement énorme. Par exemple, 10 activations coûtent déjà 500 points.
+L’agent apprend donc qu’il est plus avantageux, du point de vue de la récompense, de ne jamais utiliser le moteur principal, même si cela conduit à un crash.
+
