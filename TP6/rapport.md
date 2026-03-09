@@ -1,4 +1,4 @@
-# TP 6: 
+# TP 6: IA Explicable et Interprétable
 **OUALGHAZI Mohamed**
 # Exercice 1:
 
@@ -62,7 +62,7 @@ Ainsi, Grad-CAM fournit une explication sémantique globale indiquant les régio
 ![Integrated Gradients vs SmoothGrad](ig_smooth_pneumo_1.png)
 
 Ces visualisations comparent deux méthodes d’explicabilité : **Integrated Gradients (IG)** et **SmoothGrad**.  
-Integrated Gradients permet d’obtenir une attribution précise au niveau du pixel en intégrant les gradients entre une image de référence (baseline) et l’image d’entrée. Cependant, la carte générée peut être bruitée. SmoothGrad permet d’améliorer la lisibilité de cette carte en générant plusieurs versions bruitées de l’image et en moyennant les attributions obtenues.
+Integrated Gradients permet d’obtenir une attribution précise au niveau du pixel en intégrant les gradients entre une image de référence (baseline) et l’image d’entrée. Cependant, la carte générée est bruitée. SmoothGrad permet d’améliorer la lisibilité de cette carte en générant plusieurs versions bruitées de l’image et en moyennant les attributions obtenues.
 
 ---
 
@@ -101,14 +101,7 @@ Cela permet d’obtenir une explication plus complète du comportement du modèl
 
 ![Importance des coefficients](glassbox_coefficients.png)
 
-Chaque coefficient indique l'influence d'une variable sur la prédiction :
 
-- les coefficients positifs (bleu) poussent la prédiction vers la classe Bénigne (1)
-- les coefficients négatifs (rouge) poussent la prédiction vers la classe Maligne (0)
-
-Le modèle atteint une accuracy de 0.9737, ce qui montre qu'une régression logistique simple peut déjà être très performante.
-
----
 
 ### Variable ayant le plus d’impact vers la classe Maligne
 
@@ -124,5 +117,46 @@ Le coefficient négatif important indique que des valeurs élevées de cette car
 ### Avantage d’un modèle intrinsèquement interprétable
 
 L’avantage d’un modèle intrinsèquement interprétable, comme la régression logistique, est que l’explication de la décision est directement contenue dans les coefficients du modèle.  
+
+# Exercice 4 
+
+### Performance du modèle
+
+Le modèle **Random Forest** entraîné sur le dataset Breast Cancer Wisconsin atteint une **accuracy de 0.9649** sur le jeu de test.
+
+---
+
+### Explicabilité globale
+
+![SHAP Summary Plot](shap_summary.png)
+
+Le **Summary Plot SHAP** montre l'importance globale des variables sur l'ensemble des prédictions du modèle.  
+Les variables les plus influentes observées sur ce graphique sont notamment :
+
+- **worst area**
+- **worst concave points**
+- **mean concave points**
+
+Ces variables apparaissent également parmi les caractéristiques importantes observées avec la régression logistique dans l'exercice 3 (par exemple `worst texture`, `worst radius`, `worst perimeter`, etc.).
+
+Cela suggère que certaines caractéristiques morphologiques des cellules, notamment celles liées à la forme et aux concavités de la tumeur, constituent des biomarqueurs robustes.  
+En effet, elles restent importantes même lorsque l'on change de type de modèle, passant d'un modèle linéaire simple à un modèle d'ensemble plus complexe comme un Random Forest.
+
+---
+
+### Explicabilité locale
+
+![SHAP Waterfall Plot](shap_waterfall.png)
+
+Le **Waterfall Plot** montre comment les différentes caractéristiques du **patient 0** contribuent à la prédiction finale du modèle.
+
+La caractéristique ayant le plus contribué à tirer la prédiction vers la valeur finale est :
+
+- **Feature : worst area**
+- **Valeur pour ce patient : 677.9**
+
+Cette caractéristique augmente la probabilité que la tumeur soit classée **bénigne**, avec une contribution SHAP d'environ **+0.07**.
+
+Le graphique montre également que d'autres variables importantes comme **worst concave points**, **mean concave points** et **worst radius** contribuent également à renforcer cette prédiction.
 
 
