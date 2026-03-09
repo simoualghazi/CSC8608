@@ -51,5 +51,78 @@ Pour l’afficher sur l’image d’origine, cette carte est réinterpolée (ups
 
 Ainsi, Grad-CAM fournit une explication sémantique globale indiquant les régions importantes pour la prédiction, mais il ne permet pas une localisation précise au niveau du pixel.
 
-# Exercice 2:
+# Exercice 2 
+
+### Visualisation comparative
+
+#### Image normale
+![Integrated Gradients vs SmoothGrad](ig_smooth_normal_1.png)
+
+#### Image pneumonie
+![Integrated Gradients vs SmoothGrad](ig_smooth_pneumo_1.png)
+
+Ces visualisations comparent deux méthodes d’explicabilité : **Integrated Gradients (IG)** et **SmoothGrad**.  
+Integrated Gradients permet d’obtenir une attribution précise au niveau du pixel en intégrant les gradients entre une image de référence (baseline) et l’image d’entrée. Cependant, la carte générée peut être bruitée. SmoothGrad permet d’améliorer la lisibilité de cette carte en générant plusieurs versions bruitées de l’image et en moyennant les attributions obtenues.
+
+---
+
+### Temps d’exécution
+
+Les temps mesurés lors de l’exécution sont les suivants :
+
+| Image | Classe prédite | Temps inférence | Temps IG | Temps SmoothGrad |
+|------|------|------|------|------|
+| normal_1.jpeg | NORMAL | 0.0151 s | 1.0853 s | 14.1607 s |
+| pneumo_1.jpeg | PNEUMONIA | 0.0146 s | 0.4290 s | 13.8371 s |
+
+On observe que l’inférence simple est très rapide (environ **0.015 s**).  
+En revanche, **Integrated Gradients** est déjà plus coûteux car il nécessite plusieurs calculs de gradients le long d’un chemin entre l’image de référence et l’image d’entrée.  
+**SmoothGrad** augmente encore fortement le temps de calcul car il répète cette attribution sur **100 versions bruitées de l’image** avant d’en faire la moyenne.
+
+---
+
+### Faisabilité en temps réel
+
+Au vu du temps de calcul de SmoothGrad (environ **14 secondes**), il serait difficile de générer cette explication de manière synchrone lors du premier clic d’analyse d’un médecin dans une application clinique.
+
+Une architecture plus réaliste serait de **retourner immédiatement la prédiction du modèle au frontend, puis de lancer le calcul de l’explication de manière asynchrone via une file de messages traitée par des workers GPU**, qui renvoient ensuite la carte d’explicabilité une fois le calcul terminé.
+
+---
+
+### Avantage mathématique des valeurs négatives
+
+Contrairement à **Grad-CAM**, qui applique un **ReLU** et ne conserve que les contributions positives, **Integrated Gradients produit des attributions signées**.
+
+Les valeurs positives correspondent aux pixels qui **favorisent la classe prédite**, tandis que les valeurs négatives correspondent aux pixels qui **s’opposent à cette prédiction**.  
+Cela permet d’obtenir une explication plus complète du comportement du modèle, car on peut identifier à la fois les éléments qui soutiennent la décision et ceux qui la contredisent. Grad-CAM, en supprimant les contributions négatives via le filtre ReLU, perd cette information.
+
+# Exercice 3:
+### Importance des variables
+
+![Importance des coefficients](glassbox_coefficients.png)
+
+Chaque coefficient indique l'influence d'une variable sur la prédiction :
+
+- les coefficients positifs (bleu) poussent la prédiction vers la classe Bénigne (1)
+- les coefficients négatifs (rouge) poussent la prédiction vers la classe Maligne (0)
+
+Le modèle atteint une accuracy de 0.9737, ce qui montre qu'une régression logistique simple peut déjà être très performante.
+
+---
+
+### Variable ayant le plus d’impact vers la classe Maligne
+
+ la caractéristique qui pousse le plus la prédiction vers la classe Maligne est :
+
+worst texture
+
+Cette variable représente la texture maximale observée dans les cellules tumorales.  
+Le coefficient négatif important indique que des valeurs élevées de cette caractéristique augmentent fortement la probabilité que la tumeur soit classée comme maligne.
+
+---
+
+### Avantage d’un modèle intrinsèquement interprétable
+
+L’avantage d’un modèle intrinsèquement interprétable, comme la régression logistique, est que l’explication de la décision est directement contenue dans les coefficients du modèle.  
+
 
